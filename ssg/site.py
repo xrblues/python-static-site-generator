@@ -1,5 +1,4 @@
 from pathlib import Path
-import os
 
 class Site(object):
     """docstring for Site."""
@@ -10,10 +9,11 @@ class Site(object):
 
     def create_dir(self, path):
         # path to destination folder path
-        directory = self.dest/path.relative_to(self.source)
-        directory.mkdir(directory, parents=True, exist_ok=True)
+        directory = self.dest / path.relative_to(self.source)
+        directory.mkdir(parents=True, exist_ok=True)
 
     def build(self):
+        self.dest.mkdir(parents=True, exist_ok=True)
         for path in self.source.rglob("*"):
-            if path.isDirectory():
-                create_dir(path)
+            if path.is_dir():
+                self.create_dir(path)
